@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Minero</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #332e2e;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 40%;
+            margin: auto;
+            background-color: #1f1e2e;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+            color: white;
+            min-height: 500px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #ffffff;
+        }
+        .screen {
+            display: none;
+            padding: 20px;
+        }
+        .screen.active {
+            display: block;
+        }
+        .menu-button {
+            background-color: #949c1f77;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            width: 100%;
+            margin: 10px 0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .menu-button:hover {
+            background-color: #45a049;
+        }
+        .back-button {
+            background-color: #666;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .game-gif {
+            width: 200px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 10px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: block;
+        }
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .login-form input {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #666;
+        }
+        .slider-container {
+            margin: 20px 0;
+        }
+        .slider-container label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .slider {
+            width: 100%;
+        }
+        .character-selection {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .character-card {
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .character-card.selected {
+            background-color: #4CAF50;
+        }
+        .character-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Pantalla de Login -->
+        <div id="login" class="screen active">
+            <h1>El Minero</h1>
+            <!-- Reemplazado el grid de imágenes por un solo GIF -->
+            <img class="game-gif" src="animados/gif1.gif" alt="Animación del juego">
+            <form class="login-form" onsubmit="event.preventDefault(); showScreen('menuPrincipal')">
+                <input type="text" placeholder="Usuario" required>
+                <input type="password" placeholder="Contraseña" required>
+                <button class="menu-button" type="submit">Iniciar Sesión</button>
+            </form>
+        </div>
+
+        <!-- Menú Principal -->
+        <div id="menuPrincipal" class="screen">
+            <h1>Menú Principal</h1>
+            <button class="menu-button" onclick="showScreen('jugar')">Jugar</button>
+            <button class="menu-button" onclick="showScreen('opciones')">Opciones</button>
+            <button class="menu-button" onclick="showScreen('creditos')">Créditos</button>
+            <button class="menu-button" onclick="showScreen('login')">Salir</button>
+        </div>
+
+        <!-- Opciones -->
+        <div id="opciones" class="screen">
+            <h2>Opciones</h2>
+            <button class="menu-button" onclick="showScreen('ajusteSonido')">Ajuste de Sonido</button>
+            <button class="menu-button" onclick="showScreen('ajusteGraficos')">Ajuste de Gráficos</button>
+            <button class="menu-button" onclick="showScreen('controles')">Controles</button>
+            <button class="back-button" onclick="showScreen('menuPrincipal')">Volver</button>
+        </div>
+
+        <!-- Ajuste de Sonido -->
+        <div id="ajusteSonido" class="screen">
+            <h2>Ajuste de Sonido</h2>
+            <div class="slider-container">
+                <label>Volumen Música</label>
+                <input type="range" class="slider" min="0" max="100" value="50">
+            </div>
+            <div class="slider-container">
+                <label>Volumen Efectos</label>
+                <input type="range" class="slider" min="0" max="100" value="50">
+            </div>
+            <button class="back-button" onclick="showScreen('opciones')">Volver</button>
+        </div>
+
+        <!-- Ajuste de Gráficos -->
+        <div id="ajusteGraficos" class="screen">
+            <h2>Ajuste de Gráficos</h2>
+            <div class="slider-container">
+                <label>Calidad Gráfica</label>
+                <input type="range" class="slider" min="0" max="100" value="75">
+            </div>
+            <div class="slider-container">
+                <label>Brillo</label>
+                <input type="range" class="slider" min="0" max="100" value="50">
+            </div>
+            <button class="back-button" onclick="showScreen('opciones')">Volver</button>
+        </div>
+
+        <!-- Controles -->
+        <div id="controles" class="screen">
+            <h2>Controles</h2>
+            <div style="text-align: center;">
+                <p>W - Arriba</p>
+                <p>S - Abajo</p>
+                <p>A - Izquierda</p>
+                <p>D - Derecha</p>
+                <p>Espacio - Saltar</p>
+            </div>
+            <button class="back-button" onclick="showScreen('opciones')">Volver</button>
+        </div>
+
+        <!-- Créditos -->
+        <div id="creditos" class="screen">
+            <h2>Créditos</h2>
+            <div style="text-align: center;">
+                <p>Desarrollado por: JeiMo</p>
+                <p>Diseño: ????</p>
+                <p>Música: Santmo</p>
+                <p>Versión 1.0</p>
+            </div>
+            <button class="back-button" onclick="showScreen('menuPrincipal')">Volver</button>
+        </div>
+
+        <!-- Jugar -->
+        <div id="jugar" class="screen">
+            <h2>Selección de Personaje</h2>
+            <div class="character-selection">
+                <div class="character-card" onclick="selectCharacter(this)">
+                    <img src="animados/gif2.gif" alt="Personaje 1">
+                    <p>Cletus el loco</p>
+                </div>
+                <div class="character-card" onclick="selectCharacter(this)">
+                    <img src="images/img3.jpeg" alt="Personaje 2">
+                    <p>pancho barbas</p>
+                </div>
+            </div>
+            <input type="text" placeholder="Nombre de tu personaje" style="width: 50%; padding: 10px; margin: 10px auto;">
+            <button class="menu-button" onclick="alert('¡Iniciando juego!')">Comenzar</button>
+            <button class="back-button" onclick="showScreen('menuPrincipal')">Volver</button>
+        </div>
+    </div>
+
+    <script>
+        function showScreen(screenId) {
+            // Ocultar todas las pantallas
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            // Mostrar la pantalla seleccionada
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function selectCharacter(element) {
+            // Remover selección previa
+            document.querySelectorAll('.character-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            // Seleccionar nuevo personaje
+            element.classList.add('selected');
+        }
+    </script>
+</body>
+</html>
